@@ -309,7 +309,27 @@ function sendMessage() {
     let respuesta = "🤖 Heidy-IA: Estoy aquí para ayudarte. Explícame tu pregunta y vamos paso a paso.";
 
     const q = question.toLowerCase();
+const operacion = q
+  .replace(/×/g, "*")
+  .replace(/÷/g, "/")
+  .match(/(-?\d+(?:\.\d+)?)\s*([+\-*/])\s*(-?\d+(?:\.\d+)?)/);
 
+if (operacion) {
+  const a = Number(operacion[1]);
+  const operador = operacion[2];
+  const b = Number(operacion[3]);
+
+  let resultado;
+
+  if (operador === "+") resultado = a + b;
+  if (operador === "-") resultado = a - b;
+  if (operador === "*") resultado = a * b;
+  if (operador === "/") {
+    resultado = b === 0 ? "No se puede dividir entre cero." : a / b;
+  }
+
+  respuesta = `🤖 Heidy-IA: El resultado es ${resultado}.`;
+    }
     if (q.includes("hola") || q.includes("buenas")) {
         respuesta = "🤖 Heidy-IA: ¡Hola! 👋 Soy Heidy-IA. ¿Qué tarea necesitas resolver?";
     } 
