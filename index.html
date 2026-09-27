@@ -306,13 +306,28 @@ function sendMessage() {
   input.value = "";
 
   setTimeout(() => {
+    let respuesta = "🤖 Heidy-IA: Estoy aquí para ayudarte. Explícame tu pregunta y vamos paso a paso.";
 
-    addMessage(
-      "🤖 Heidy-IA: Recibí tu pregunta. En la siguiente etapa conectaremos la inteligencia artificial para poder analizarla y darte una respuesta completa paso a paso. 📚✨",
-      "bot"
-    );
+    const q = question.toLowerCase();
 
-  }, 600);
+    if (q.includes("hola") || q.includes("buenas")) {
+        respuesta = "🤖 Heidy-IA: ¡Hola! 👋 Soy Heidy-IA. ¿Qué tarea necesitas resolver?";
+    } 
+    else if (q.includes("matemática") || q.includes("matematicas")) {
+        respuesta = "🤖 Heidy-IA: 📐 Claro. Envíame el ejercicio de Matemáticas y te lo explicaré paso a paso.";
+    }
+    else if (q.includes("historia")) {
+        respuesta = "🤖 Heidy-IA: 🌎 Claro. Dime qué tema de Historia necesitas estudiar y te lo explicaré de forma sencilla.";
+    }
+    else if (q.includes("ciencia") || q.includes("ciencias")) {
+        respuesta = "🤖 Heidy-IA: 🔬 Claro. Envíame tu pregunta de Ciencias y la resolveremos paso a paso.";
+    }
+    else if (q.includes("gracias")) {
+        respuesta = "🤖 Heidy-IA: 😊 ¡De nada! Estoy aquí para ayudarte.";
+    }
+
+    addMessage(respuesta, "bot");
+}, 600);
 }
 
 
