@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heidy-IA 🤖📚</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f7fb;
+      color: #1f2937;
+    }
+
+    header {
+      background: linear-gradient(135deg, #6d28d9, #2563eb);
+      color: white;
+      padding: 25px 18px;
+      text-align: center;
+      border-radius: 0 0 25px 25px;
+    }
+
+    header h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      font-size: 15px;
+      opacity: .95;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .welcome {
+      background: white;
+      padding: 20px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    }
+
+    .welcome h2 {
+      margin-bottom: 8px;
+      color: #4f46e5;
+    }
+
+    .subjects {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .subject {
+      border: none;
+      background: white;
+      padding: 18px 10px;
+      border-radius: 16px;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 3px 12px rgba(0,0,0,.08);
+      transition: .2s;
+    }
+
+    .subject:hover {
+      transform: translateY(-2px);
+    }
+
+    .subject span {
+      display: block;
+      font-size: 28px;
+      margin-bottom: 7px;
+    }
+
+    .chat {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.08);
+    }
+
+    .chat h2 {
+      color: #4f46e5;
+      margin-bottom: 15px;
+    }
+
+    #messages {
+      min-height: 220px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 5px;
+      margin-bottom: 15px;
+    }
+
+    .message {
+      padding: 12px 14px;
+      border-radius: 14px;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .bot {
+      background: #eef2ff;
+      margin-right: 25px;
+    }
+
+    .user {
+      background: #2563eb;
+      color: white;
+      margin-left: 25px;
+      text-align: right;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 8px;
+    }
+
+    textarea {
+      flex: 1;
+      resize: none;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 15px;
+      min-height: 50px;
+    }
+
+    button.send {
+      border: none;
+      background: #4f46e5;
+      color: white;
+      border-radius: 12px;
+      padding: 0 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .photo {
+      margin-top: 12px;
+      width: 100%;
+      border: 2px dashed #a5b4fc;
+      background: #eef2ff;
+      padding: 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      color: #4338ca;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    @media(max-width: 600px) {
+      .subjects {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      header h1 {
+        font-size: 26px;
+      }
+
+      .input-area {
+        flex-direction: column;
+      }
+
+      button.send {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🤖 Heidy-IA 📚</h1>
+  <p>Tu asistente inteligente para aprender y hacer tus tareas</p>
+</header>
+
+<div class="container">
+
+  <div class="welcome">
+    <h2>¡Hola! 👋</h2>
+    <p>
+      Soy Heidy-IA. Puedo ayudarte a comprender tus tareas,
+      resolver ejercicios y explicarte los temas paso a paso.
+    </p>
+  </div>
+
+  <div class="subjects">
+
+    <button class="subject" onclick="selectSubject('Matemáticas')">
+      <span>➗</span>
+      Matemáticas
+    </button>
+
+    <button class="subject" onclick="selectSubject('Ciencias')">
+      <span>🔬</span>
+      Ciencias
+    </button>
+
+    <button class="subject" onclick="selectSubject('Historia')">
+      <span>🌎</span>
+      Historia
+    </button>
+
+    <button class="subject" onclick="selectSubject('Lenguaje')">
+      <span>✍️</span>
+      Lenguaje
+    </button>
+
+    <button class="subject" onclick="selectSubject('Geografía')">
+      <span>🗺️</span>
+      Geografía
+    </button>
+
+    <button class="subject" onclick="selectSubject('Tarea general')">
+      <span>📚</span>
+      Mi tarea
+    </button>
+
+  </div>
+
+  <div class="chat">
+
+    <h2>💬 Habla con Heidy-IA</h2>
+
+    <div id="messages">
+
+      <div class="message bot">
+        🤖 Hola, soy Heidy-IA.  
+        Escríbeme tu tarea y te ayudaré a entenderla paso a paso.
+      </div>
+
+    </div>
+
+    <div class="input-area">
+      <textarea id="question"
+        placeholder="Escribe aquí tu tarea o pregunta..."></textarea>
+
+      <button class="send" onclick="sendMessage()">
+        Enviar
+      </button>
+    </div>
+
+    <label class="photo">
+      📷 Subir foto de mi tarea
+      <input type="file" accept="image/*" onchange="photoSelected(event)">
+    </label>
+
+  </div>
+
+</div>
+
+<footer>
+  Heidy-IA 🤖📚 — Asistente inteligente para tareas
+</footer>
+
+<script>
+
+function addMessage(text, type) {
+
+  const messages = document.getElementById("messages");
+
+  const div = document.createElement("div");
+
+  div.className = "message " + type;
+
+  div.innerHTML = text;
+
+  messages.appendChild(div);
+
+  messages.scrollTop = messages.scrollHeight;
+}
+
+
+function sendMessage() {
+
+  const input = document.getElementById("question");
+
+  const question = input.value.trim();
+
+  if (!question) return;
+
+  addMessage(question, "user");
+
+  input.value = "";
+
+  setTimeout(() => {
+
+    addMessage(
+      "🤖 Heidy-IA: Recibí tu pregunta. En la siguiente etapa conectaremos la inteligencia artificial para poder analizarla y darte una respuesta completa paso a paso. 📚✨",
+      "bot"
+    );
+
+  }, 600);
+}
+
+
+function selectSubject(subject) {
+
+  const input = document.getElementById("question");
+
+  input.value = "Necesito ayuda con " + subject + ". Explícame paso a paso: ";
+
+  input.focus();
+
+}
+
+
+function photoSelected(event) {
+
+  if (event.target.files.length > 0) {
+
+    addMessage(
+      "📷 Has seleccionado una foto de tu tarea. La función de análisis de imágenes se conectará en la siguiente etapa.",
+      "user"
+    );
+
+  }
+
+}
+
+</script>
+
+</body>
+  </html>
